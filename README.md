@@ -34,3 +34,57 @@ PLACEHOLDER
 ``sigma convert -t splunk PLACEHOLDER``
 - Import generated queries into your SIEM for testing and deployment.
 - Simulate attacks or replay logs to validate detection efficacy.
+
+# Walkthrough
+
+## Lab Environment Setup
+- systems to simulate (AD Controller, endpoints, linux server, etc)
+- Choose attack simulation scope, common TTPs (lateral movement, privilege escalationm, etc)
+- Configure Active Directory and Endpoint
+- Deploy SIEM (Splunk or ELastic) and configure log collection
+
+## Mapping MITRE ATT&CK Techniques
+- Selecting techniques
+  - Inital Access: Brute Force
+  - Execution: CLI
+  - Lateral Movement: RDP, pass-the-hash
+  - Privilege Escalation: Token Impersonation, etc
+- Document each technique (name, MITRE ID, expected log source/event, detection logic (what event pattern indicate this technique))
+
+## Create Sigma Rules
+- Sigma rules = YAML files describing generic detection logic
+  - included fields: title, id, desc, status, logsource, detection, level, tags, etc
+- Write the Rules
+- Create Additional rules for additional techniques (prioritize privilege escalation and lateral movement out of them all)
+
+## Implement Sigma Rules in Splunk
+- Convert Sigma to Splunk Queries (sigmac)
+- Load queries into SIEM
+- Test rule accuracy (small simulate attack)
+
+## Simulate Attack
+- Run Controlled Scenarios
+- Log results
+  - Document triggered alerts
+  - Record MTTD for each scenario
+
+## Automate Triage and Response
+- Identify Response Action
+  - isolate endpoints (EDR + Shuffle?)
+- Implement Automation
+  - Use Splunk Alert + Scripts (Or SOAR?) to trigger automated response
+- Measure Metrics
+  - MTTD
+  - MTTR
+  - False Positve/negatives
+
+## Reporting
+- Create Dashboard
+  - Show coverageby MITRE ATT&CK Category
+  - Include alert count, MTTD, MTTR
+- Document Lesson Learned
+  - List which Sigma Rules are performing
+  - Identify gaps in detection coverage
+  - Sugget real-world improvement
+  
+- 
